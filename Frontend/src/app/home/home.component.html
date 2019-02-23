@@ -1,0 +1,51 @@
+<link rel="stylesheet" href="https://unpkg.com/@progress/kendo-theme-default@latest/dist/all.css" />
+<div class="example-config">
+  <button kendo-button (click)="pdf.saveAs('invoice.pdf')">
+    Save As PDF...
+  </button>
+</div>
+<kendo-pdf-export #pdf paperSize="A3" margin="2cm">
+  <div>
+    <h2>Card Details for: {{greeting.cardNum}} </h2>
+    <h3>Name: {{greeting.name}}, Sex: {{greeting.sexDesc}}</h3>
+    <h4>Marital Status: {{greeting.marNm}}, Age: {{greeting.age}}</h4>
+    <h4>Education: {{greeting.eduNm}}</h4>
+  </div>
+  <div>
+    <h2>Limit Balance: {{greeting.limBal}}</h2>
+    <h4>Payment Next Month: {{greeting.payNextMonth}}</h4>
+  </div>
+  <div>
+    <kendo-chart [categoryAxis]="{ categories: categories }">
+      <kendo-chart-title text="Gross domestic product growth /GDP annual %/"></kendo-chart-title>
+      <kendo-chart-legend position="bottom" orientation="horizontal"></kendo-chart-legend>
+      <kendo-chart-tooltip format="{0} NT$"></kendo-chart-tooltip>
+      <kendo-chart-series>
+        <kendo-chart-series-item *ngFor="let item of series" type="line" [style]="smooth" [data]="item.data"
+          [name]="item.name">
+        </kendo-chart-series-item>
+      </kendo-chart-series>
+    </kendo-chart>
+    <kendo-grid [data]="gridData" [skip]="state.skip" [sort]="state.sort" [filter]="state.filter" [sortable]="true"
+      filterable="menu">
+      <kendo-grid-column field="billAmt" title="Bill Amount NT$" width="100">
+        <ng-template kendoGridFilterCellTemplate let-filter let-column="column">
+          <kendo-grid-string-filter-cell [column]="column" [filter]="filter">
+          </kendo-grid-string-filter-cell>
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column field="payAmt" title="Amount Due NT$" width="100">
+        <ng-template kendoGridFilterCellTemplate let-filter let-column="column">
+          <kendo-grid-string-filter-cell [column]="column" [filter]="filter">
+          </kendo-grid-string-filter-cell>
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column field="name" title="Payment Status" width="100">
+        <ng-template kendoGridFilterCellTemplate let-filter let-column="column">
+          <kendo-grid-string-filter-cell [column]="column" [filter]="filter">
+          </kendo-grid-string-filter-cell>
+        </ng-template>
+      </kendo-grid-column>
+    </kendo-grid>
+  </div>
+</kendo-pdf-export>
