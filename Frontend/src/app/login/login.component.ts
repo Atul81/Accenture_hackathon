@@ -9,17 +9,23 @@ import { Observable } from 'rxjs';
   templateUrl: './login.component.html'
 })
 
-export class LoginComponent{
+export class LoginComponent {
 
-  credentials = {username: '', password: ''};
+  isAuthenticated: boolean = false;
+
+  credentials = { username: '', password: '' };
 
   constructor(private app: AppService, private http: HttpClient, private router: Router) {
   }
 
   login() {
     this.app.authenticate(this.credentials, () => {
-        this.router.navigateByUrl('/');
+      this.router.navigateByUrl('/');
     });
+    if (this.app.authenticationError) { 
+      console.log("Va;ue passed to Login");
+      this.isAuthenticated = true;
+    }
     return false;
   }
 }
